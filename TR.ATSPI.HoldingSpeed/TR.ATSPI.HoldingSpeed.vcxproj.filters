@@ -21,6 +21,9 @@
     <ClInclude Include="dllmain.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -31,5 +34,10 @@
     <None Include="dllmain.def">
       <Filter>Source</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TR.ATSPI.HoldingSpeed.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
