@@ -35,24 +35,38 @@ DE void SC SetVehicleSpec(Spec s)
 DE void SC Initialize(int b) {
 }
 
+bool IsConstSpeedModeEnabling = false;
+bool IsConstSpeedModeDisabling = false;
 bool IsConstSpeedModeEnabled = false;
 
 DE Hand SC Elapse(State S, int * p, int * s)
 {
-	handle.C = ConstSPInfo::Continue;
-
 	if (S.V < 15 || handle.P != 3)
 	{
+		IsConstSpeedModeDisabling = IsConstSpeedModeEnabled;
+		IsConstSpeedModeEnabling = false;
 		IsConstSpeedModeEnabled = false;
 	}
 
-	if (IsConstSpeedModeEnabled)
+	if (S.V < 15 || handle.P != -1)
 	{
-		handle.C = (handle.C == ConstSPInfo::Enable) ? ConstSPInfo::Continue : ConstSPInfo::Enable;
+		IsHoldingSpeedModeEnabled = false;
+	}
+
+	if (IsConstSpeedModeEnabling)
+	{
+		handle.C = ConstSPInfo::Enable;
+		IsConstSpeedModeEnabled = true;
+		IsConstSpeedModeEnabling = false;
+	}
+	else if (IsConstSpeedModeDisabling)
+	{
+		handle.C = ConstSPInfo::Disable;
+		IsConstSpeedModeDisabling = false;
 	}
 	else
 	{
-		handle.C = ConstSPInfo::Disable;
+		handle.C = ConstSPInfo::Continue;
 	}
 
 	return handle;
@@ -60,7 +74,11 @@ DE Hand SC Elapse(State S, int * p, int * s)
 
 DE void SC SetPower(int p) {
 	if (handle.P >= 4 && p == 3)
-		IsConstSpeedModeEnabled = true;
+	{
+		IsConstSpeedModeDisabling = false;
+		IsConstSpeedModeEnabling = true;
+		IsConstSpeedModeEnabled = false;
+	}
 
 	handle.P = p;
 }
