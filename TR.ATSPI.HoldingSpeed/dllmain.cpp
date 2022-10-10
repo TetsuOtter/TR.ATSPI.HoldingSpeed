@@ -45,14 +45,18 @@ const int PANEL_HOLD_BRAKE_MODE_EC_ENABLED = 36;
 
 DE Hand SC Elapse(State S, int * p, int * s)
 {
-	if (S.V < 15 || handle.P != 3)
+	float absSpeed = S.V;
+	if (absSpeed < 0)
+		absSpeed *= -1;
+
+	if (absSpeed < 15 || handle.P != 3)
 	{
 		IsConstSpeedModeDisabling = IsConstSpeedModeEnabled;
 		IsConstSpeedModeEnabling = false;
 		IsConstSpeedModeEnabled = false;
 	}
 
-	if (S.V < 15 || handle.P != -1)
+	if (absSpeed < 15 || handle.P != -1)
 	{
 		IsHoldingSpeedModeEnabled = false;
 	}
@@ -84,7 +88,7 @@ DE Hand SC Elapse(State S, int * p, int * s)
 		p[PANEL_HOLD_BRAKE_MODE_EC_ENABLED] = 0;
 	}
 
-	if (S.V < 15 && handle.P < 0 && S.I == 0)
+	if (absSpeed < 15 && handle.P < 0 && S.I == 0)
 	{
 		_hand.B = -handle.P + 1;
 		p[PANEL_HOLD_BRAKE_MODE_AIR_ENABLED] = 1;

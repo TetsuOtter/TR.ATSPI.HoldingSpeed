@@ -116,12 +116,16 @@
 	<ItemGroup>
 		<ClInclude Include="ats.h" />
 		<ClInclude Include="dllmain.h" />
+		<ClInclude Include="resource.h" />
 	</ItemGroup>
 	<ItemGroup>
 		<ClCompile Include="dllmain.cpp" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="dllmain.def" />
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="TR.ATSPI.HoldingSpeed.rc" />
 	</ItemGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 	<ImportGroup Label="ExtensionTargets">
